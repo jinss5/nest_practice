@@ -1,8 +1,8 @@
 import { IsString, IsNumber, IsOptional } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateMovieDto } from './create-movie.dto';
+import { CreatePostDto } from './create-post.dto';
 
-export class UpdateMovieDto extends PartialType(CreateMovieDto) {}
+export class UpdatePostDto extends PartialType(CreatePostDto) {}
 
 // export class UpdateMovieDto {
 //     @IsString()

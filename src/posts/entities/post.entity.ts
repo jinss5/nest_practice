@@ -1,6 +1,6 @@
-export class Movie {
+export class Post {
   id: number;
-  title: string;
+  context: string;
   year: number;
   genres: string[];
 }
