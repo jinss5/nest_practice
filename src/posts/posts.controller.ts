@@ -42,7 +42,7 @@ export class PostsController {
     return this.postsService.deleteOne(postId);
   }
 
-  @Patch()
+  @Patch('/:id')
   update(@Param('id') postId: number, @Body() updateData: UpdatePostDto) {
     this.postsService.update(postId, updateData);
   }

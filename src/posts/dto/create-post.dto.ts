@@ -9,5 +9,5 @@ export class CreatePostDto {
 
   @IsOptional()
   @IsString({ each: true })
-  readonly genres: string[];
+  readonly category: string[];
 }

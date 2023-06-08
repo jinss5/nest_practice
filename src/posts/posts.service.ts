@@ -14,7 +14,7 @@ export class PostsService {
   getOne(id: number): Post {
     const post = this.posts.find((post) => post.id === id);
     if (!post) {
-      throw new NotFoundException(`Movie with id: ${id} not found`);
+      throw new NotFoundException(`Post with id: ${id} not found`);
     }
 
     return post;
