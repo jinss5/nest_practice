@@ -7,7 +7,7 @@ export class CreatePostDto {
   @IsNumber()
   readonly year: number;
 
-  @IsOptional()
-  @IsString({ each: true })
-  readonly category: string[];
+  // @IsOptional()
+  // @IsString({ each: true })
+  // readonly category: string[];
 }
