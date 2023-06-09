@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsModule } from './posts/posts.module';
 import { AppController } from './app.controller';
-import { Post } from './posts/domain/post.entity';
-import { Category } from './posts/domain/category.entity';
+import { Post } from './posts/entity/post.entity';
+import { Category } from './posts/entity/category.entity';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -14,10 +16,11 @@ import { Category } from './posts/domain/category.entity';
       username: 'root',
       password: 'password',
       database: 'nest',
-      entities: [Post, Category],
+      entities: [Post, Category, User],
       synchronize: true,
     }),
     PostsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [],
