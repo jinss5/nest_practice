@@ -24,7 +24,17 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) framework TypeScript practuce repository.
+
+## Included feature
+ - Sign Up
+ - Login
+ - Posts CRUD
+ - Posts filtering, ordering
+
+## ERD
+
+## API
 
 ## Installation
 
