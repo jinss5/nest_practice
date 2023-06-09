@@ -1,18 +1,24 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
+import { UserDto } from './dto/user.dto';
 import { User } from './entities/user.entity';
-//import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepo: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
-  async signUp(userData: CreateUserDto) {
+  async signUp(userData: UserDto) {
     const hashedPassword = await hash(userData.password, 10);
 
     if (await this.getUserByEmail(userData.email)) {
@@ -25,23 +31,21 @@ export class UsersService {
     });
   }
 
-  private async getUserByEmail(email: string) {
+  async login(email: string, password: string) {
+    const user: User = await this.getUserByEmail(email);
+    const isMatch: boolean = await compare(password, user.password);
+
+    if (!user || !isMatch) {
+      throw new HttpException(
+        'INVALID_EMAIL_OR_PASSWORD',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return { accessToken: this.jwtService.sign({ id: user.id }) };
+  }
+
+  private async getUserByEmail(email: string): Promise<User> {
     return await this.userRepo.findOneBy({ email });
   }
-
-  /*findAll() {
-    return `This action returns all users`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }*/
 }
