@@ -73,6 +73,7 @@ export class PostsService {
     });
 
     await this.postRepo.save({
+      title: postData.title,
       context: postData.context,
       year: postData.year,
       categoryId: categoryData.id,
@@ -91,6 +92,7 @@ export class PostsService {
     await this.postRepo.update(
       { id },
       {
+        title: updateData.title,
         context: updateData.context,
         year: updateData.year,
         categoryId: categoryData.id,

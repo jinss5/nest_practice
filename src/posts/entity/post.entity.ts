@@ -8,11 +8,15 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from './category.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity({ name: 'posts' })
 export class Post {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  title: string;
 
   @Column()
   context: string;
@@ -23,6 +27,9 @@ export class Post {
   @Column({ name: 'category_id' })
   categoryId: number;
 
+  @Column({ name: 'user_id' })
+  userId: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
@@ -32,4 +39,8 @@ export class Post {
   @ManyToOne(() => Category, (category) => category.id)
   @JoinColumn({ name: 'category_id' })
   category: Category;
+
+  @ManyToOne(() => User, (user) => user.id)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }
