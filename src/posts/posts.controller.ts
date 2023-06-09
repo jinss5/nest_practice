@@ -25,8 +25,9 @@ export class PostsController {
   async filter(
     @Query('category') category: string,
     @Query('year') year: number,
+    @Query('orderBy') orderBy: string,
   ) {
-    return this.postsService.filter(category, year);
+    return this.postsService.filter(category, year, orderBy);
   }
 
   @Get('/:id')

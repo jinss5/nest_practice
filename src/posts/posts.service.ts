@@ -14,12 +14,13 @@ export class PostsService {
   ) {}
 
   async getAllPosts() {
-    const posts: Post[] = await this.postRepo.find();
+    const posts: Post[] = await this.postRepo.find({ relations: ['category'] });
     return posts;
   }
 
-  async filter(category: string, year: number) {
+  async filter(category: string, year: number, orderBy: string) {
     let whereCondition: any = {};
+    let orderCondition: any = {};
 
     if (category) {
       const categoryId: number = (
@@ -29,19 +30,35 @@ export class PostsService {
       whereCondition.categoryId = categoryId;
     }
 
-    if (year) {
-      whereCondition.year = year;
+    if (year) whereCondition.year = year;
+
+    switch (orderBy) {
+      case 'recent':
+        orderCondition.createdAt = 'DESC';
+        break;
+      case 'old':
+        orderCondition.createdAt = 'ASC';
+        break;
+      case 'yearUp':
+        orderCondition.year = 'ASC';
+        break;
+      case 'yearDown':
+        orderCondition.year = 'DESC';
+        break;
     }
 
-    const posts = await this.postRepo.find({
+    return await this.postRepo.find({
+      relations: ['category'],
       where: whereCondition,
+      order: orderCondition,
     });
-
-    return posts;
   }
 
   async getPostById(id: number) {
-    const post: Post = await this.postRepo.findOneBy({ id });
+    const post: Post[] = await this.postRepo.find({
+      relations: ['category'],
+      where: { id },
+    });
 
     if (!post) {
       throw new NotFoundException(`Post with id: ${id} not found`);
