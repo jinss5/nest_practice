@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 //import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -11,8 +12,21 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
 
-  async signUp(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async signUp(userData: CreateUserDto) {
+    const hashedPassword = await hash(userData.password, 10);
+
+    if (await this.getUserByEmail(userData.email)) {
+      throw new HttpException('EMAIL_ALREADY_EXISTS', HttpStatus.BAD_REQUEST);
+    }
+
+    await this.userRepo.save({
+      email: userData.email,
+      password: hashedPassword,
+    });
+  }
+
+  private async getUserByEmail(email: string) {
+    return await this.userRepo.findOneBy({ email });
   }
 
   /*findAll() {

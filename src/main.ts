@@ -6,8 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
-      transform: true,
+      whitelist: true, // request that do not have matching decorated validation rules will be stripped
+      transform: true, // transforms incomming data's type
     }),
   );
   await app.listen(3000);
