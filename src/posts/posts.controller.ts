@@ -21,10 +21,13 @@ export class PostsController {
     return this.postsService.getAllPosts();
   }
 
-  // @Get('search') // if /search is under /:id, the nest is going to think /search is /:id
-  // search(@Query('year') seachingYear: string) {
-  //   return `We are searching for a post made after: ${seachingYear}`;
-  // }
+  @Get('filter') // if /search is under /:id, the nest is going to think /search is /:id
+  async filter(
+    @Query('category') category: string,
+    @Query('year') year: number,
+  ) {
+    return this.postsService.filter(category, year);
+  }
 
   @Get('/:id')
   async getPostById(@Param('id') postId: number) {
@@ -46,6 +49,6 @@ export class PostsController {
     @Param('id') postId: number,
     @Body() updateData: UpdatePostDto,
   ) {
-    this.postsService.updatePost(postId, updateData);
+    return this.postsService.updatePost(postId, updateData);
   }
 }
