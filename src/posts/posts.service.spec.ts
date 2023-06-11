@@ -4,10 +4,13 @@ import { Post } from './entity/post.entity';
 import { Category } from './entity/category.entity';
 import { User } from '../users/entities/user.entity';
 import { Repository } from 'typeorm';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 describe('PostsService', () => {
   let service: PostsService;
   let postRepository: Repository<Post>;
+  let categoryRepository: Repository<Category>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,6 +29,7 @@ describe('PostsService', () => {
 
     service = module.get<PostsService>(PostsService);
     postRepository = module.get<Repository<Post>>('PostRepository'); // Inject the repository token
+    categoryRepository = module.get<Repository<Category>>('CategoryRepository');
   });
 
   it('SUCCESS: get all post', async () => {
@@ -64,5 +68,120 @@ describe('PostsService', () => {
     expect(postRepository.find).toHaveBeenCalledWith({
       relations: ['category'],
     });
+  });
+
+  it('SUCCESS: get one post', async () => {
+    const mockPost: Post = {
+      id: 1,
+      title: 'Test Post',
+      context: 'This is a test post',
+      year: 2023,
+      categoryId: 1,
+      userId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: null,
+      user: null,
+    };
+
+    jest.spyOn(postRepository, 'find').mockResolvedValueOnce([mockPost]);
+
+    const result = await service.getPostById(1);
+
+    expect(result).toEqual([mockPost]);
+    expect(postRepository.find).toHaveBeenCalledWith({
+      relations: ['category'],
+      where: { id: 1 },
+    });
+  });
+
+  it('SUCCESS: create a post', async () => {
+    const createPostDto: CreatePostDto = {
+      title: 'Test Post',
+      context: 'This is a test post',
+      year: 2023,
+      category: 'Test Category',
+    };
+
+    const mockCategory = new Category();
+    mockCategory.id = 1;
+    mockCategory.name = 'Test Category';
+
+    const mockSavedPost: Post = {
+      id: 1,
+      title: 'Test Post',
+      context: 'This is a test post',
+      year: 2023,
+      categoryId: 1,
+      userId: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: mockCategory,
+      user: null,
+    };
+
+    jest
+      .spyOn(categoryRepository, 'findOneBy')
+      .mockResolvedValueOnce(mockCategory);
+    jest.spyOn(postRepository, 'save').mockResolvedValueOnce(mockSavedPost);
+
+    await service.createPost(createPostDto);
+
+    expect(categoryRepository.findOneBy).toHaveBeenCalledWith({
+      name: createPostDto.category,
+    });
+
+    expect(postRepository.save).toHaveBeenCalledWith({
+      title: createPostDto.title,
+      context: createPostDto.context,
+      year: createPostDto.year,
+      categoryId: mockCategory.id,
+    });
+  });
+
+  it('SUCCESS: delete a post', async () => {
+    const postId = 1;
+
+    const deleteSpy = jest
+      .spyOn(postRepository, 'delete')
+      .mockResolvedValueOnce(undefined);
+
+    await service.deletePost(postId);
+
+    expect(deleteSpy).toHaveBeenCalledWith(postId);
+  });
+
+  it('SUCCESS: update a post', async () => {
+    const postId = 1;
+    const updateData: UpdatePostDto = {
+      title: 'Updated Title',
+      context: 'Updated Context',
+      year: 2024,
+      category: 'Updated Category',
+    };
+
+    const categoryData = new Category();
+    categoryData.id = 1;
+    categoryData.name = 'Updated Category';
+
+    const findOneSpy = jest
+      .spyOn(categoryRepository, 'findOneBy')
+      .mockResolvedValueOnce(categoryData);
+    const updateSpy = jest
+      .spyOn(postRepository, 'update')
+      .mockResolvedValueOnce(undefined);
+
+    await service.updatePost(postId, updateData);
+
+    expect(findOneSpy).toHaveBeenCalledWith({ name: updateData.category });
+    expect(updateSpy).toHaveBeenCalledWith(
+      { id: postId },
+      {
+        title: updateData.title,
+        context: updateData.context,
+        year: updateData.year,
+        categoryId: categoryData.id,
+      },
+    );
   });
 });
