@@ -40,16 +40,25 @@
 
 ## API
 
-| HTTP Methods | Endpoints                                              | Description                                           |
-| ------------ | ------------------------------------------------------ | ----------------------------------------------------- |
-| POST         | /user/signup                                           | sign up a new user account                         |
-| POST         | /user/login                                            | login an existing user account                     |
-| POST         | /posts                                                 | create a new post                                  |
-| GET          | /posts                                                 | retrieve all posts                                 |
-| GET          | /posts/:id                                             | retrieve information of a single post              |
+| HTTP Methods | Endpoints                                              | Description                                                   |
+| ------------ | ------------------------------------------------------ | ------------------------------------------------------------- |
+| POST         | /user/signup                                           | sign up a new user account                                    |
+| POST         | /user/login                                            | login an existing user account                                |
+| POST         | /posts                                                 | create a new post                                             |
+| GET          | /posts                                                 | retrieve all posts                                            |
+| GET          | /posts/:id                                             | retrieve information of a single post                         |
 | GET          | /posts/filter?category=&year=&orderBy=&page=&pageSize= | retrieve filtered ordered, and paignated information of posts |
-| PATCH        | /posts/:id                                             | edit the details of a single post                  |
-| DELETE       | /posts/:id                                             | delete a single post                               |
+| PATCH        | /posts/:id                                             | edit the details of a single post                             |
+| DELETE       | /posts/:id                                             | delete a single post                                          |
+
+## Unit Testing
+
+    ✓ SUCCESS: get all post (18 ms)
+    ✓ SUCCESS: get one post (4 ms)
+    ✓ FAILURE: get one post - not found (14 ms)
+    ✓ SUCCESS: create a post (3 ms)
+    ✓ SUCCESS: delete a post (2 ms)
+    ✓ SUCCESS: update a post (2 ms)
 
 ## Installation
 
