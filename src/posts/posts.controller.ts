@@ -18,7 +18,7 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  async getAll(): Promise<PostEntity[]> {
+  async getAll() {
     return this.postsService.getAllPosts();
   }
 

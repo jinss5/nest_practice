@@ -5,6 +5,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { instanceToPlain } from 'class-transformer';
 
 @Injectable()
 export class PostsService {
@@ -14,8 +15,15 @@ export class PostsService {
   ) {}
 
   async getAllPosts() {
-    const posts: Post[] = await this.postRepo.find({ relations: ['category'] });
-    return posts;
+    const posts: Post[] = await this.postRepo.find({
+      relations: ['category', 'user'],
+    });
+
+    const postsWithoutPw = instanceToPlain(posts, {
+      excludePrefixes: ['password'],
+    });
+
+    return postsWithoutPw;
   }
 
   async filter(
