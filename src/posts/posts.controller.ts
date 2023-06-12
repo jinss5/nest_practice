@@ -27,8 +27,10 @@ export class PostsController {
     @Query('category') category: string,
     @Query('year') year: number,
     @Query('orderBy') orderBy: string,
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
   ): Promise<PostEntity[]> {
-    return this.postsService.filter(category, year, orderBy);
+    return this.postsService.filter(category, year, orderBy, page, pageSize);
   }
 
   @Get('/:id')

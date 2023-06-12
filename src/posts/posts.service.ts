@@ -18,9 +18,16 @@ export class PostsService {
     return posts;
   }
 
-  async filter(category: string, year: number, orderBy: string) {
+  async filter(
+    category: string,
+    year: number,
+    orderBy: string,
+    page: number,
+    pageSize: number,
+  ) {
     let whereCondition: any = {};
     let orderCondition: any = {};
+    let limitCondition: any = {};
 
     if (category) {
       const categoryId: number = (
@@ -47,10 +54,17 @@ export class PostsService {
         break;
     }
 
+    if (page && pageSize) {
+      limitCondition.skip = (page - 1) * pageSize;
+      limitCondition.take = pageSize;
+    }
+
     return await this.postRepo.find({
       relations: ['category'],
       where: whereCondition,
       order: orderCondition,
+      skip: limitCondition.skip,
+      take: limitCondition.take,
     });
   }
 

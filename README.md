@@ -27,26 +27,29 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript practuce repository.
 
 ## Included feature
- - Sign Up
- - Login
- - Posts CRUD
- - Posts filtering, ordering
- - Posts.Service unit testing
+
+- Sign Up
+- Login
+- Posts CRUD
+- Posts filtering, ordering
+- Posts.Service unit testing
 
 ## ERD
+
 ![nest](https://github.com/jinss5/nest_practice/assets/62521403/065b8f34-d301-413b-a879-07a7bd59f252)
 
-## API 
-| HTTP Methods | Endpoints | Description |
-| --- | --- | --- |
-| POST | /user/signup | To sign up a new user account |
-| POST | /user/login | To login an existing user account |
-| POST | /posts | To create a new post |
-| GET | /posts | To retrieve all posts |
-| GET | /posts/:id | To retrieve information of a single post |
-| GET | /posts/filter?category=&year=&orderBy= | To retrieve filtered and ordered information of posts|
-| PATCH | /posts/:id | To edit the details of a single post |
-| DELETE | /posts/:id | To delete a single post |
+## API
+
+| HTTP Methods | Endpoints                                              | Description                                           |
+| ------------ | ------------------------------------------------------ | ----------------------------------------------------- |
+| POST         | /user/signup                                           | To sign up a new user account                         |
+| POST         | /user/login                                            | To login an existing user account                     |
+| POST         | /posts                                                 | To create a new post                                  |
+| GET          | /posts                                                 | To retrieve all posts                                 |
+| GET          | /posts/:id                                             | To retrieve information of a single post              |
+| GET          | /posts/filter?category=&year=&orderBy=&page=&pageSize= | To retrieve filtered and ordered information of posts |
+| PATCH        | /posts/:id                                             | To edit the details of a single post                  |
+| DELETE       | /posts/:id                                             | To delete a single post                               |
 
 ## Installation
 

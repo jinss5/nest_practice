@@ -80,8 +80,8 @@ describe('PostsService', () => {
       userId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
-      category: null,
-      user: null,
+      category: new Category(),
+      user: new User(),
     };
 
     jest.spyOn(postRepository, 'find').mockResolvedValueOnce([mockPost]);
@@ -107,7 +107,7 @@ describe('PostsService', () => {
     mockCategory.id = 1;
     mockCategory.name = 'Test Category';
 
-    const mockSavedPost: Post = {
+    const mockPost: Post = {
       id: 1,
       title: 'Test Post',
       context: 'This is a test post',
@@ -117,13 +117,13 @@ describe('PostsService', () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       category: mockCategory,
-      user: null,
+      user: new User(),
     };
 
     jest
       .spyOn(categoryRepository, 'findOneBy')
       .mockResolvedValueOnce(mockCategory);
-    jest.spyOn(postRepository, 'save').mockResolvedValueOnce(mockSavedPost);
+    jest.spyOn(postRepository, 'save').mockResolvedValueOnce(mockPost);
 
     await service.createPost(createPostDto);
 
@@ -167,6 +167,7 @@ describe('PostsService', () => {
     const findOneSpy = jest
       .spyOn(categoryRepository, 'findOneBy')
       .mockResolvedValueOnce(categoryData);
+
     const updateSpy = jest
       .spyOn(postRepository, 'update')
       .mockResolvedValueOnce(undefined);
