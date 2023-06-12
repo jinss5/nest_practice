@@ -31,7 +31,7 @@
 - Sign Up
 - Login
 - Posts CRUD
-- Posts filtering, ordering
+- Posts filtering, ordering, paignation
 - Posts.Service unit testing
 
 ## ERD
@@ -47,7 +47,7 @@
 | POST         | /posts                                                 | To create a new post                                  |
 | GET          | /posts                                                 | To retrieve all posts                                 |
 | GET          | /posts/:id                                             | To retrieve information of a single post              |
-| GET          | /posts/filter?category=&year=&orderBy=&page=&pageSize= | To retrieve filtered and ordered information of posts |
+| GET          | /posts/filter?category=&year=&orderBy=&page=&pageSize= | To retrieve filtered ordered, and paignated information of posts |
 | PATCH        | /posts/:id                                             | To edit the details of a single post                  |
 | DELETE       | /posts/:id                                             | To delete a single post                               |
 
