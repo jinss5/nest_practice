@@ -123,7 +123,7 @@ describe('PostsService', () => {
       context: 'This is a test post',
       year: 2023,
       categoryId: 1,
-      userId: null,
+      userId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
       category: mockCategory,
@@ -146,19 +146,33 @@ describe('PostsService', () => {
       context: createPostDto.context,
       year: createPostDto.year,
       categoryId: mockCategory.id,
+      userId: mockPost.userId,
     });
   });
 
   it('SUCCESS: delete a post', async () => {
-    const postId = 1;
+    const mockPost: Post = {
+      id: 1,
+      title: 'Test Post',
+      context: 'This is a test post',
+      year: 2023,
+      categoryId: 1,
+      userId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: new Category(),
+      user: new User(),
+    };
+
+    jest.spyOn(postRepository, 'findOneBy').mockResolvedValueOnce(mockPost);
 
     const deleteSpy = jest
       .spyOn(postRepository, 'delete')
       .mockResolvedValueOnce(undefined);
 
-    await service.deletePost(postId);
+    await service.deletePost(mockPost.id);
 
-    expect(deleteSpy).toHaveBeenCalledWith(postId);
+    expect(deleteSpy).toHaveBeenCalledWith(mockPost.id);
   });
 
   it('SUCCESS: update a post', async () => {
