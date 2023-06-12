@@ -42,14 +42,14 @@
 
 | HTTP Methods | Endpoints                                              | Description                                           |
 | ------------ | ------------------------------------------------------ | ----------------------------------------------------- |
-| POST         | /user/signup                                           | To sign up a new user account                         |
-| POST         | /user/login                                            | To login an existing user account                     |
-| POST         | /posts                                                 | To create a new post                                  |
-| GET          | /posts                                                 | To retrieve all posts                                 |
-| GET          | /posts/:id                                             | To retrieve information of a single post              |
-| GET          | /posts/filter?category=&year=&orderBy=&page=&pageSize= | To retrieve filtered ordered, and paignated information of posts |
-| PATCH        | /posts/:id                                             | To edit the details of a single post                  |
-| DELETE       | /posts/:id                                             | To delete a single post                               |
+| POST         | /user/signup                                           | sign up a new user account                         |
+| POST         | /user/login                                            | login an existing user account                     |
+| POST         | /posts                                                 | create a new post                                  |
+| GET          | /posts                                                 | retrieve all posts                                 |
+| GET          | /posts/:id                                             | retrieve information of a single post              |
+| GET          | /posts/filter?category=&year=&orderBy=&page=&pageSize= | retrieve filtered ordered, and paignated information of posts |
+| PATCH        | /posts/:id                                             | edit the details of a single post                  |
+| DELETE       | /posts/:id                                             | delete a single post                               |
 
 ## Installation
 
