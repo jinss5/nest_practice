@@ -52,13 +52,13 @@
 | DELETE       | /posts/:id                                             | delete a single post                                          |
 
 ## Unit Testing
-
-    ✓ SUCCESS: get all post (18 ms)
-    ✓ SUCCESS: get one post (4 ms)
-    ✓ FAILURE: get one post - not found (14 ms)
-    ✓ SUCCESS: create a post (3 ms)
-    ✓ SUCCESS: delete a post (2 ms)
-    ✓ SUCCESS: update a post (2 ms)
+    $ npm run test posts.service.spec
+    ✓ SUCCESS: get all post 
+    ✓ SUCCESS: get one post 
+    ✓ FAILURE: get one post - not found 
+    ✓ SUCCESS: create a post 
+    ✓ SUCCESS: delete a post 
+    ✓ SUCCESS: update a post 
 
 ## Installation
 
