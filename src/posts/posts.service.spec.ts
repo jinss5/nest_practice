@@ -66,6 +66,7 @@ describe('PostsService', () => {
     const result = await service.getAllPosts();
 
     expect(result).toEqual(mockPosts);
+    expect(result.length).toEqual(2);
     expect(postRepository.find).toHaveBeenCalledWith({
       relations: ['category', 'user'],
     });
