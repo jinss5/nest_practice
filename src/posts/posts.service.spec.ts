@@ -6,6 +6,7 @@ import { User } from '../users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { NotFoundException } from '@nestjs/common';
 
 describe('PostsService', () => {
   let service: PostsService;
@@ -93,6 +94,14 @@ describe('PostsService', () => {
       relations: ['category'],
       where: { id: 1 },
     });
+  });
+
+  it('FAILURE: get one post - not found', async () => {
+    jest.spyOn(postRepository, 'find').mockResolvedValueOnce(undefined);
+
+    await expect(service.getPostById(1)).rejects.toThrow(
+      new NotFoundException('Post with id: 1 not found'),
+    );
   });
 
   it('SUCCESS: create a post', async () => {
