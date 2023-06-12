@@ -99,15 +99,22 @@ export class PostsService {
       context: postData.context,
       year: postData.year,
       categoryId: categoryData.id,
+      userId: postData.userId,
     });
   }
 
   async deletePost(id: number) {
+    const post: Post = await this.postRepo.findOneBy({ id });
+
+    if (!post) {
+      throw new NotFoundException(`Post with id: ${id} not found`);
+    }
+
     await this.postRepo.delete(id);
   }
 
   async updatePost(id: number, updateData: UpdatePostDto) {
-    const categoryData = await this.catRepo.findOneBy({
+    const categoryData: Category = await this.catRepo.findOneBy({
       name: updateData.category,
     });
 

@@ -12,4 +12,7 @@ export class CreatePostDto {
 
   @IsString()
   category: string;
+
+  @IsNumber()
+  userId: number;
 }

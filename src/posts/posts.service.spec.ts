@@ -22,8 +22,8 @@ describe('PostsService', () => {
           useClass: Repository, // Mock the repository class
         },
         {
-          provide: 'CategoryRepository', // Use the repository token
-          useClass: Repository, // Mock the repository class
+          provide: 'CategoryRepository',
+          useClass: Repository,
         },
       ],
     }).compile();
@@ -110,6 +110,7 @@ describe('PostsService', () => {
       context: 'This is a test post',
       year: 2023,
       category: 'Test Category',
+      userId: 1,
     };
 
     const mockCategory = new Category();

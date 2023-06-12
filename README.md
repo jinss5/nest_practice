@@ -52,13 +52,15 @@
 | DELETE       | /posts/:id                                             | delete a single post                                          |
 
 ## Unit Testing
+
     $ npm run test posts.service.spec
-    ✓ SUCCESS: get all post 
-    ✓ SUCCESS: get one post 
-    ✓ FAILURE: get one post - not found 
-    ✓ SUCCESS: create a post 
-    ✓ SUCCESS: delete a post 
-    ✓ SUCCESS: update a post 
+
+    ✓ SUCCESS: get all post
+    ✓ SUCCESS: get one post
+    ✓ FAILURE: get one post - not found
+    ✓ SUCCESS: create a post
+    ✓ SUCCESS: delete a post
+    ✓ SUCCESS: update a post
 
 ## Installation
 
